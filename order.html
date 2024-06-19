@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - Foodie Delight</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function calculateTotal() {
+            const prices = {
+                pizza: 10,
+                burger: 8,
+                pasta: 12,
+                salad: 7,
+                sushi: 15,
+                taco: 6,
+                sandwich: 9,
+                fries: 5,
+                icecream: 4,
+                soup: 7
+            };
+
+            let total = 0;
+            for (let item in prices) {
+                const quantity = document.getElementById(item).value;
+                total += prices[item] * quantity;
+            }
+
+            document.getElementById('totalPrice').innerText = "Total Price: $" + total;
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+
+            const orderDetails = {
+                name: document.getElementById('name').value,
+                address: document.getElementById('address').value,
+                items: {}
+            };
+
+            const items = ['pizza', 'burger', 'pasta', 'salad', 'sushi', 'taco', 'sandwich', 'fries', 'icecream', 'soup'];
+            items.forEach(item => {
+                const quantity = document.getElementById(item).value;
+                if (quantity > 0) {
+                    orderDetails.items[item] = quantity;
+                }
+            });
+
+            localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
+            window.location.href = "confirmation.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Place Your Order</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="confirmation.html">Confirmation</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Order Form</h2>
+        <form onsubmit="submitOrder(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br><br>
+            
+            <h3>Choose Items:</h3>
+            <div class="menu-item">
+                <label for="pizza">Pizza ($10):</label>
+                <input type="number" id="pizza" name="pizza" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="burger">Burger ($8):</label>
+                <input type="number" id="burger" name="burger" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="pasta">Pasta ($12):</label>
+                <input type="number" id="pasta" name="pasta" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="salad">Salad ($7):</label>
+                <input type="number" id="salad" name="salad" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="sushi">Sushi ($15):</label>
+                <input type="number" id="sushi" name="sushi" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="taco">Taco ($6):</label>
+                <input type="number" id="taco" name="taco" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="sandwich">Sandwich ($9):</label>
+                <input type="number" id="sandwich" name="sandwich" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="fries">Fries ($5):</label>
+                <input type="number" id="fries" name="fries" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="icecream">Ice Cream ($4):</label>
+                <input type="number" id="icecream" name="icecream" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <div class="menu-item">
+                <label for="soup">Soup ($7):</label>
+                <input type="number" id="soup" name="soup" min="0" value="0" onchange="calculateTotal()">
+            </div>
+            
+            <h3 id="totalPrice">Total Price: $0</h3>
+            <input type="submit" value="Order Now" class="order-button">
+        </form>
+    </main>
+</body>
+</html>

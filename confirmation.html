@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation - Foodie Delight</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function displayOrderDetails() {
+            const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+
+            if (orderDetails) {
+                document.getElementById('customerName').innerText = orderDetails.name;
+                document.getElementById('customerAddress').innerText = orderDetails.address;
+
+                const prices = {
+                    pizza: 10,
+                    burger: 8,
+                    pasta: 12,
+                    salad: 7,
+                    sushi: 15,
+                    taco: 6,
+                    sandwich: 9,
+                    fries: 5,
+                    icecream: 4,
+                    soup: 7
+                };
+
+                let orderSummary = '';
+                let total = 0;
+                for (let item in orderDetails.items) {
+                    const quantity = orderDetails.items[item];
+                    const price = prices[item] * quantity;
+                    total += price;
+                    orderSummary += `<div class="order-item">
+                        <span>${item.charAt(0).toUpperCase() + item.slice(1)} x ${quantity}</span>
+                        <span>$${price}</span>
+                    </div>`;
+                }
+
+                document.getElementById('orderSummary').innerHTML = orderSummary;
+                document.getElementById('totalPrice').innerText = `Total Price: $${total}`;
+            }
+        }
+
+        window.onload = displayOrderDetails;
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Order Confirmation</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="order.html">Order</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Thank you for your order, <span id="customerName"></span>!</h2>
+        <p>We will deliver your order to the following address:</p>
+        <p id="customerAddress"></p>
+        
+        <h3>Your Order:</h3>
+        <div id="orderSummary" class="order-summary"></div>
+        <h3 id="totalPrice"></h3>
+    </main>
+    <footer>
+        <p>&copy; 2024 Foodie Delight. All rights reserved.</p>
+    </footer>
+</body>
+</html>
